@@ -1,0 +1,96 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Assets/Font/Minecraftia-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Assets/Button/restart pressed 64x24.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Button/restart 64x24.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/GameOver.gd" type="Script" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "Fade"
+tracks/0/type = "value"
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 0.776471 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ) ]
+}
+
+[node name="GameOver" type="CanvasLayer"]
+script = ExtResource( 4 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -1.0
+margin_top = -4.0
+margin_right = 518.0
+margin_bottom = 293.0
+color = Color( 0, 0, 0, 0 )
+
+[node name="YouDied" type="Label" parent="."]
+visible = false
+margin_left = 1.0
+margin_top = 89.0
+margin_right = 512.0
+margin_bottom = 111.0
+custom_colors/font_color = Color( 0.980392, 0.415686, 0.0392157, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "YOU DIED :C"
+align = 1
+valign = 1
+
+[node name="ClickLabel" type="Label" parent="."]
+visible = false
+margin_top = 116.0
+margin_right = 853.0
+margin_bottom = 138.0
+rect_scale = Vector2( 0.6, 0.6 )
+custom_fonts/font = SubResource( 2 )
+text = "CLICK TO RESTART!"
+align = 1
+valign = 1
+
+[node name="Restart" type="TextureButton" parent="."]
+visible = false
+margin_left = 224.0
+margin_top = 151.0
+margin_right = 288.0
+margin_bottom = 175.0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Fade = SubResource( 3 )
+anims/RESET = SubResource( 4 )
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="CD" type="Timer" parent="."]
+
+[connection signal="pressed" from="Restart" to="." method="_on_Restart_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

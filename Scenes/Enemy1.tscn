@@ -1,0 +1,70 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Assets/Enemies/enemy1 16x16.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/Enemy1.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/EnemyBullet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Sound/enemy_shoot.wav" type="AudioStream" id=5]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 6.0
+} ]
+
+[sub_resource type="CircleShape2D" id=6]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id=7]
+radius = 6.0
+
+[node name="Enemy1" type="KinematicBody2D" groups=["Enemy"]]
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 5 )
+animation = "Idle"
+frame = 3
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 6 )
+
+[node name="BulletDetect" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BulletDetect"]
+visible = false
+position = Vector2( 0, 1 )
+shape = SubResource( 7 )
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 7, 0 )
+
+[node name="EnemyBullet" parent="." instance=ExtResource( 3 )]
+position = Vector2( -993, -1123 )
+
+[node name="ShootCD" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="Shoot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[connection signal="body_entered" from="BulletDetect" to="." method="_on_BulletDetect_body_entered"]

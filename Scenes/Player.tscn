@@ -1,0 +1,113 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Player/ren idle 32x32.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Player/ren run 32x32.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/Pistol.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Bullet.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Player/ren fall 32x32.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Player/ren jump 32x32.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Light/2d_lights_and_shadows_neutral_point_light.webp" type="Texture" id=8]
+[ext_resource path="res://Assets/Sound/jump.wav" type="AudioStream" id=9]
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 2 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 3 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 3 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 3 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 3 )
+region = Rect2( 128, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 3 )
+region = Rect2( 160, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ SubResource( 14 ) ],
+"loop": true,
+"name": "Fall",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 15 ) ],
+"loop": true,
+"name": "Jump",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ) ],
+"loop": true,
+"name": "Run",
+"speed": 8.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 4, 7 )
+
+[node name="Player" type="KinematicBody2D" groups=["Player"]]
+script = ExtResource( 1 )
+acceleration = 160
+
+[node name="Ren" type="AnimatedSprite" parent="."]
+frames = SubResource( 2 )
+animation = "Run"
+frame = 4
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 0, 1 )
+shape = SubResource( 3 )
+
+[node name="Bullet" parent="." instance=ExtResource( 5 )]
+position = Vector2( -1229, -828 )
+
+[node name="Light2D" type="Light2D" parent="."]
+texture = ExtResource( 8 )
+energy = 1.2
+shadow_enabled = true
+
+[node name="Pistol" parent="." instance=ExtResource( 4 )]
+
+[node name="Jump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )

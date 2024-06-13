@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/frostfire fury.mp3-f555c4af380b0ac11c286366517cdbc7.mp3str"
+
+[deps]
+
+source_file="res://Assets/Music/frostfire fury.mp3"
+dest_files=[ "res://.import/frostfire fury.mp3-f555c4af380b0ac11c286366517cdbc7.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
